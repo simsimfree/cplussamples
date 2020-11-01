@@ -4,11 +4,20 @@
 #include "structures.h"
 #include "static.h"
 
+#include <vector>
+
 int main(int, char**) {
     auto test = "test";
 
     std::cout << "Hello, world! : " << test<< "\n";
 
+
+    std::vector<int> ee;
+    ee.push_back(11);
+
+
+    std::cout<<ee.size()<<std::endl;
+    
 
     SubLogic1 test1;
     test1.test();

@@ -9,9 +9,10 @@
 | <<< | 표준 입력 | stdin을 문자열로부터 | ``` $ cat <<< "hello $USER" ``` |
 | <<EOF <br> EOF | 다중문자열 표준 입력 | stdin을 여러 문자열로부터 | ``` $ cat > ./out.txt <<EOF ``` <br> ``` hello $USER ``` <br> ``` EOF ``` |
 | >> | 출력 리디렉션2 | stdout 을 파일로 이어쓰기로 저장 | ``` $ echo "test" >> ./test.txt ``` |
-| \| | 파이프 | 명령의 표준출력을 다른 명령의 표준입력으로 | ```$ ls -al | grep .txt ``` |
-| $ | 변수 | 사용시는 $쓰지 않고 참조할때만 $사용 | ``` $ var= "this is var"   ``` <br>  ``` $ echo $var ``` |
-| $() | 명령 결과 변수화 | 명령 실행 결과를 변수처리.  | ``` $ docker rm $(docker ps -aq) ``` <br>``` $ echo $(date) ```  |
+| \| | 파이프 | 명령의 표준출력을 다른 명령의 표준입력으로 | ```$ ls -al \| grep .txt ``` |
+| $ | 변수 | 사용시는 $쓰지 않고 참조할때만 $사용 | ``` $ var= "this is var"   \n $ echo $var ``` |
+| $() | 명령 결과 변수화 | 명령 실행 결과를 변수처리.  | ``` $ docker rm $(docker ps -aq) 
+ $ echo $(date) ```  |
 | && | 여러 명령실행 | 에러가 **없어야** 다음 명령 수행 | ```$ make && make install ``` |
 | ; | 여러 명령실행 2 | 에러가 **있어도** 다음 명령 수행 | ``` $ false; echo "hello" ``` |
 | ' ' | 문자열 | 변수와 명령들도 문자열 그대로 | ``` $ echo '$var' ``` |
@@ -23,7 +24,7 @@
 | {1..10} | 숫자 컬렉션 | 시작부터 끝까지 연속된 숫자 | ``` $ echo "{1..10}" ``` |
 | export | 환경변수 등록 | export  변수=값 | ``` $ export VALUE="test" ``` |
 | sed | 텍스트 파일의 문자열을 변경 | sed -i "s/찾을문자열/바꿀문자열/g" 파일명 | ``` $ sed -i "s/findstr/foundstr/g" test.txt ``` |
-| printf | formated 출력 | 파이프로 연동하여 입력하는 기능도 가능 | ``` $ printf 80\\test\\y | example-config ``` |
+| printf | formated 출력 | 파이프로 연동하여 입력하는 기능도 가능 | ``` $ printf 80\\test\\y \| example-config ``` |
 
 
 

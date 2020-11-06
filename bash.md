@@ -53,7 +53,7 @@ fi
 
 ## for
 
-```
+```bash
 for i in 컬렉션
 do
    수행문
@@ -64,7 +64,7 @@ done
 
 * 명령의 결과
   * ex) ls   
-   ```
+   ```bash
     for i in $(ls)
     do
         echo $i
@@ -73,7 +73,7 @@ done
 
 * 범위 지정
   
-   ```
+   ```bash
     for ((i=0; i<10;i++))
     do
         echo $i
@@ -81,7 +81,7 @@ done
    ``` 
 
 * 변수 열거  
-   ```
+   ```bash
     NUMS=(1 2 3)
     for i in ${NUMS[@]}
     do
@@ -90,7 +90,7 @@ done
    ``` 
 
 ## while
-```
+```bash
   while [조건]
   do
      수행문

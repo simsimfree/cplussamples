@@ -29,7 +29,6 @@
 
  [macOS 버전](https://hub.docker.com/editions/community/docker-ce-desktop-mac/)
 
-# 이미 실행되어 있는 컨테이너에 연결?
 
 
 # Command

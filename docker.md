@@ -2,6 +2,7 @@
 * 가상화 플랫폼
 * OS의 가상화가 아닌 프로세스 격리만 수행
 * 네트워크는 bridge로 구성되며, 성능이 중요하다면 --net=host 옵션 구성
+* 파일시스템이 국소적이기 때문에 find 명령에 부담이 없다. 
 
 ## Image
 
@@ -73,6 +74,14 @@ $docker container run -it --name hello ubuntu /bin/bash
 * -i : 표준입출력을 가능하게 한다
 * -t : 터미널을 에뮬레이팅한다
 * -d : 백그라운드 프로세스로 실행한다
+* --rm : 컨테이너를 실행만 하고 컨테이너는 삭제. 1회성일 경우 사용
+* -expose : 호스트 포트를 외부에 노출하지 않음
+* -p : 포트 포워딩
+* -e : 환경변수. 컨테이너 실행 설정으로 활용
+* --link : 컨테이너와 컨테이너를 연결
+* -v : 호스트의 데이터 볼륨을 공유 (디렉토리, 파일)
+* --volumes-from : 데이터 볼륨 컨테이너 연결
+  * 데이터 볼륨을 공유하기 위한 컨테이너를 연결함으로써 해당 컨테이너의 볼륨을 연결된 컨테이너 참조가능
 
 도커는 명령을 실행하고 끝
 
@@ -81,21 +90,6 @@ i,t,d옵션 없다면 bash를 한번 실행하고 바로 종료
 -it 로 실행된 컨테이너의 콘솔을 종료하면 해당명령이 종료된 시점이 되어 컨테이너도 종료
 
 create + start와 같은 동작
-
-## attach
-
-실행된 컨테이너에 접속
-
-docker container attach -옵션 컨테이너이름 or 컨테이너id
-
-```bash
-$docker attach hello
-```
-attach 된 콘솔을 종료한다면 컨테이너가 종료 
-
-따라서 Ctrl+p , Ctrl+q 로 컨테이너를 정지하지 않고 detach
-
-bash같은 쉘이 아닌 대부분의 경우 출력만을 보여지게 됨.
 
 ## ps
 
@@ -109,6 +103,38 @@ $docker ps -a
 
 * -a : 정지된 컨테이너까지 모두 출력
 
+
+
+## rmi
+
+이미지 삭제
+
+```bash
+$docker rmi ubuntu:latest
+```
+
+태그 없이 이미지만 지정하면 모든 이미지이름에 대응하는 이미지 삭제
+
+## ls
+
+like ps
+
+ps와 달리 image에서도 사용
+
+
+# Container
+
+docker container 계열 명령
+
+## rm
+
+컨테이너 삭제
+
+실행중인 컨테이너는 실패 (-f로 강제삭제)
+
+```bash
+$docker rm hello
+```
 
 ## start
 
@@ -129,6 +155,21 @@ docker container restart 컨테이너이름 or 컨테이너id
     ```bash
     $docker container restart hello
     ```
+
+## attach
+
+실행된 컨테이너에 접속
+
+docker container attach -옵션 컨테이너이름 or 컨테이너id
+
+```bash
+$docker attach hello
+```
+attach 된 콘솔을 종료한다면 컨테이너가 종료 
+
+따라서 Ctrl+p , Ctrl+q 로 컨테이너를 정지하지 않고 detach
+
+bash같은 쉘이 아닌 대부분의 경우 출력만을 보여지게 됨.
 
 
 ## exec
@@ -155,38 +196,43 @@ ex) docker container exec -it nginx_hello /bin/bash
 $docker container stop hello
 ```
 
-## rm
+## cp
 
-컨테이너 삭제
-
-실행중인 컨테이너는 실패 (-f로 강제삭제)
+컨테이너에서 파일을 복사
 
 ```bash
-$docker rm hello
+$docker container cp hello-nginx:/etc/nginx/nginx.conf ./
 ```
+## inspect
 
-## rmi
+컨테이너와 이미지의 설정정보를 참조
 
-이미지 삭제
+json형식으로 되어있으며, 컨테이너의 경우 run 당시의 옵션등이 지정되어있음.
 
 ```bash
-$docker rmi ubuntu:lastest
+docker inspect -f "{{ 찾을 속성 (.Volumns , .HostsPath) }} 컨테이너이름
 ```
 
-태그 없이 이미지만 지정하면 모든 이미지이름에 대응하는 이미지 삭제
-
-## ls
-
-like ps
-
-ps와 달리 image에서도 사용
 
 # Docker hub
 
 ## diff
 
+docker 컨테이너가 실행되면서 변경된 파일 목록을 출력
+
+```bash
+$docker diff nginx_hello
+```
+
 ## commit
 
-## push
+컨테이너의 변경사항을 이미지 파일로 생성
+
+docker commit 옵션 컨테이너이름 이미지이름:태그
+
+```bash
+$docker commit -a 'user name <aaa@.bbb.com>' -m 'commit message' hello hello-nginx:0.2
+```
+
 
 ## build
